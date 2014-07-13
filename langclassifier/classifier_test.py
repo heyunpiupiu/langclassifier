@@ -7,6 +7,7 @@ import classifier
 class ClassifierTests(unittest.TestCase):
 
     def test_loads_settings(self):
+        # to be implemented later
         self.assertTrue(False)
 
     def test_accepts_list_as_language_input(self):
@@ -43,6 +44,9 @@ class ClassifierTests(unittest.TestCase):
         cl = classifier.classifier(languages_to_use=lang_list)
         self.assertTrue(cl.languages == expected_internal_lang_structure)
 
+    def test_loads_languages_from_file(self):
+        self.assertTrue(False)
+
     def test_classify_returns_dictionary(self):
         cl = classifier.classifier()
         output = cl.classify()
@@ -58,6 +62,19 @@ class ClassifierTests(unittest.TestCase):
         cl = classifier.classifier()
         output = cl.classify()
         self.assertTrue(output == expected_answer)
+
+    def test_split_returns_empty_list_for_empty_input_string(self):
+        self.assertTrue(False)
+
+    def test_split_returns_list_of_strings(self):
+        self.assertTrue(False)
+
+    def test_split_returns_list_for_words_in_provided_string(self):
+        self.assertTrue(False)
+
+    def test_split_returns_none_of_the_words_we_wish_cleansed(self):
+        # to be implemented later
+        self.assertTrue(False)
 
 
 def main():

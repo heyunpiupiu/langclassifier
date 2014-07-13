@@ -11,7 +11,7 @@ class classifier:
         To optimise matching, the intersection of sets is used.
     """
 
-    config_file = 'config_classifier'  # configuration file
+    config_file_langs_default = 'config_languages'  # language configuration file
 
     def __init__(self, languages_to_use=None):
         """ Initialises class.
@@ -27,6 +27,11 @@ class classifier:
         # if class was called with languages_to_use param
         if isinstance(languages_to_use, list):
             self.set_language_sets(languages_to_use)
+
+    def load_language_sets_from_config(self, config_file=config_file_langs_default):
+        """ Loads language sets from configuration file.
+        """
+        pass
 
     def set_language_sets(self, languages_to_set):
         """ Sets class instance language/words pairs, later used for the classification process.
@@ -61,5 +66,17 @@ class classifier:
         answer = {'classified_string': '', 'language_detected': ''}
         # detect function being called without parameter
         if string_to_classify is not None:
+            word_list = self.split_and_cleanse_string(string_to_classify)  # parse string into a wordlist
             pass
         return answer
+
+    def split_and_cleanse_string(self, string):
+        """ Splits string into words. If we wish to cleanse any characters or words, should be done within.
+
+            Args:
+                string we wish to split and cleanse.
+
+            Returns:
+                list containing the words found in provided string as string elements.
+        """
+        pass
