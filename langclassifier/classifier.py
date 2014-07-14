@@ -44,12 +44,17 @@ class classifier:
     def load_language_sets_from_config(self, config_file=config_file_langs_default):
         """ Loads language sets from configuration file.
         """
-        if __import__(config_file):  # if config file for languages can be imported
-            config_langs = __import__(config_file)
-            self.set_language_sets(config_langs.languages)
-        elif __import__('langclassifier.' + config_file):  # try one level deeper
-            config_langs = __import__(config_file)
-            self.set_language_sets(config_langs.languages)
+        try:
+            if __import__(config_file):  # if config file for languages can be imported
+                config_langs = __import__(config_file)
+                self.set_language_sets(config_langs.languages)
+        except ImportError:
+            try:
+                if __import__('langclassifier.' + config_file):  # try one level deeper
+                    config_langs = __import__(config_file)
+                    self.set_language_sets(config_langs.languages)
+            except ImportError:
+                print("could not manage to import languages file")
 
     def set_language_sets(self, languages_to_set):
         """ Sets class instance language/words pairs, later used for the classification process.
@@ -127,7 +132,7 @@ class classifier:
 
         # try to open with native open function (if source is pathname)
         try:
-            return open(source)
+            return open(source)  # TODO(JC): this should be handled better
         except (IOError, OSError):
             pass
 
