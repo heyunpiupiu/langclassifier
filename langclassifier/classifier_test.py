@@ -119,7 +119,7 @@ class ClassifierTests(unittest.TestCase):
         self.assertTrue(output == expected_output)
 
     def test_feeding_from_text_file(self):
-        file_name = 'input_file_test.txt'
+        file_name = 'langclassifier/input_file_test.txt'
         expected_output = [
             {'language_detected': 'english', 'classified_string': 'The quick brown fox jumps over the lazy dog.\n'},
             {'language_detected': 'german', 'classified_string': 'Der schnelle braune Fuchs springt \xc3\xbcber den faulen Hund.\n'},

@@ -3,6 +3,7 @@
 import re
 import urllib
 import io
+import os
 
 
 class classifier:
@@ -132,12 +133,19 @@ class classifier:
 
         # try to open with native open function (if source is pathname)
         try:
-            return open(source)  # TODO(JC): this should be handled better
+            if os.path.isfile(source):
+                return open(source)
+            elif os.path.isfile('langclassifier/' + source):
+                return open(source)
+            else:
+                print 'returning None'
+                return None
+
         except (IOError, OSError):
             pass
 
         # treat source as string
-        return io.cStringIO(str(source))
+        return io.StringIO(str(source))
 
     def feed_from_source(self, source):
         """ Consumes source and classifies each line in provided source.
