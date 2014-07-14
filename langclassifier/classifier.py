@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import re
+import urllib
+import io
 
 
 class classifier:
@@ -108,3 +110,33 @@ class classifier:
             # additional cleansing can occur before or after the splitting
 
         return resulting_list
+
+    def open_source(self, source):
+        """ Opens provided source and returns a string object.
+
+            Handled source types are http/file urls and files.
+        """
+        # try to open with urllib (if source is http, ftp, or file URL)
+        try:
+            return urllib.urlopen(source)
+        except (IOError, OSError):
+            pass
+
+        # try to open with native open function (if source is pathname)
+        try:
+            return open(source)
+        except (IOError, OSError):
+            pass
+
+        # treat source as string
+        return io.cStringIO(str(source))
+
+    def feed_from_source(self, source):
+        """ Consumes source and classifies each line in provided source.
+        """
+        output = ()
+        sock = self.open_source(source)  # open the provided source
+        for line in sock.readlines():  # for each line in source
+            line_classification = self.classify(line)  # classify each line
+            output.append(line_classification)  # append classification to output object
+        return output

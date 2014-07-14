@@ -107,6 +107,29 @@ class ClassifierTests(unittest.TestCase):
         result = result and output['language_detected'] == 'dutch'
         self.assertTrue(result)
 
+    def test_feeding_from_pastebin(self):
+        pastebin_url = 'http://pastebin.com/raw.php?i=EtrfM5BC'
+        expected_output = (
+            {'language_detected': 'english', 'classified_string': 'The quick brown fox jumps over the lazy dog.\n'},
+            {'language_detected': 'german', 'classified_string': 'Der schnelle braune Fuchs springt \xc3\xbcber den faulen Hund.\n'},
+            {'language_detected': 'dutch', 'classified_string': 'De snelle bruine vos springt over de luie hond.\n'}
+        )
+        cl = classifier.classifier(languages_file='config_languages_test')
+        output = cl.feed_from_source(pastebin_url)
+        self.assertTrue(output == expected_output)
+
+    def test_feeding_from_text_file(self):
+        file_name = 'input_file_test.txt'
+        expected_output = (
+            {'language_detected': 'english', 'classified_string': 'The quick brown fox jumps over the lazy dog.\n'},
+            {'language_detected': 'german', 'classified_string': 'Der schnelle braune Fuchs springt \xc3\xbcber den faulen Hund.\n'},
+            {'language_detected': 'dutch', 'classified_string': 'De snelle bruine vos springt over de luie hond.\n'}
+        )
+        cl = classifier.classifier(languages_file='config_languages_test')
+        output = cl.feed_from_source(file_name)
+        self.assertTrue(output == expected_output)
+
+
 def main():
     unittest.main()
 
