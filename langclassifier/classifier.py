@@ -47,6 +47,9 @@ class classifier:
         if __import__(config_file):  # if config file for languages can be imported
             config_langs = __import__(config_file)
             self.set_language_sets(config_langs.languages)
+        elif __import__('langclassifier.' + config_file):  # try one level deeper
+            config_langs = __import__(config_file)
+            self.set_language_sets(config_langs.languages)
 
     def set_language_sets(self, languages_to_set):
         """ Sets class instance language/words pairs, later used for the classification process.
