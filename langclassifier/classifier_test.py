@@ -46,7 +46,7 @@ class ClassifierTests(unittest.TestCase):
         self.assertTrue(cl.languages == expected_internal_lang_structure)
 
     def test_loads_languages_from_file(self):
-        cl = classifier.classifier(languages_file='config_languages')
+        cl = classifier.classifier(languages_file='config_languages_test')
         # test at least on elanguage is loaded. If test fails, check file actually contains a valid language.
         self.assertTrue(len(cl.languages) > 0)
 
