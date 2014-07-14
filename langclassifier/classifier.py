@@ -134,7 +134,7 @@ class classifier:
     def feed_from_source(self, source):
         """ Consumes source and classifies each line in provided source.
         """
-        output = ()
+        output = []
         sock = self.open_source(source)  # open the provided source
         for line in sock.readlines():  # for each line in source
             line_classification = self.classify(line)  # classify each line
