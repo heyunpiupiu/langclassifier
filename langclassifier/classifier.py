@@ -52,8 +52,8 @@ class classifier:
         except ImportError:
             try:
                 if __import__('langclassifier.' + config_file):  # try one level deeper
-                    config_langs = __import__(config_file)
-                    self.set_language_sets(config_langs.languages)
+                    config_langs = __import__('langclassifier.' + config_file)
+                    self.set_language_sets(config_langs.config_languages.languages)
             except ImportError:
                 print("could not manage to import languages file")
 
