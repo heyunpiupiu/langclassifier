@@ -11,14 +11,12 @@ No parameter attempts to load default languages file.
 
 Tests:
 
-cd langclassifier
-
-python classifier_test.py
+python langclassifier/classifier_test.py
 
 
-Usage:
+Simple Usage:
 
-cd langclassifier
+from langclassifier import classifier
 
 cl = classifier.classifier()
 
