@@ -40,7 +40,9 @@ class classifier:
     def load_language_sets_from_config(self, config_file=config_file_langs_default):
         """ Loads language sets from configuration file.
         """
-        pass
+        if __import__(config_file):  # if config file for languages can be imported
+            config_langs = __import__(config_file)
+            self.set_language_sets(config_langs.languages)
 
     def set_language_sets(self, languages_to_set):
         """ Sets class instance language/words pairs, later used for the classification process.
@@ -72,11 +74,18 @@ class classifier:
                 If string is not classified under any language, "could not classify" is returned.
         """
         # structure of returned object
-        answer = {'classified_string': '', 'language_detected': ''}
+        answer = {'classified_string': '', 'language_detected': 'could not classify'}
         # detect function being called without parameter
         if string_to_classify is not None:
+            answer['classified_string'] = string_to_classify
             word_list = self.split_and_cleanse_string(string_to_classify)  # parse string into a wordlist
-            pass
+            word_list_set = frozenset(word_list)  # create a frozenset of the word list
+            for lang in self.languages:
+                intersection_of_sets = lang['words'].intersection(word_list_set)  # intersection of sets
+                if len(intersection_of_sets) > 0:  # if there is an intersection
+                    answer['language_detected'] = lang['lang_name']  # language found
+                    break
+
         return answer
 
     def split_and_cleanse_string(self, string):
