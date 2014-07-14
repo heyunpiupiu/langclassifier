@@ -61,7 +61,7 @@ class ClassifierTests(unittest.TestCase):
         self.assertTrue('classified_string' in output and 'language_detected' in output)
 
     def test_classify_returns_empty_dict_for_none_input(self):
-        expected_answer = {'classified_string': '', 'language_detected': ''}
+        expected_answer = {'classified_string': '', 'language_detected': 'could not classify'}
         cl = classifier.classifier()
         output = cl.classify()
         self.assertTrue(output == expected_answer)
