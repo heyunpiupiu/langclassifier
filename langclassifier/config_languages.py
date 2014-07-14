@@ -11,6 +11,6 @@ languages = [
         },
         {
             'lang_name': 'german',
-            'words': ['über', 'Hund']
+            'words': ['Fuchs', 'Hund']
         }
     ]

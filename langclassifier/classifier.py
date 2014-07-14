@@ -2,6 +2,7 @@
 
 import re
 
+
 class classifier:
     """ Classifier class for classifying input of strings, by matching
         with predefined lists of words characteristic of specified languages.
@@ -26,16 +27,17 @@ class classifier:
                 languages_to_use: a list containing dictionaries defining language/words pairs.
 
             If languages_file is passed, languages_to_use is ignored.
-
+            If neither parameter is passed, it will try to load languages from default language file.
         """
         self.languages = []  # list holding the words we define as "key" for each language
 
-        if languages_file:
+        if languages_file:  # if class was called with a languages config file
             self.load_language_sets_from_config(languages_file)
-        # if class was called with languages_to_use param
-        elif languages_to_use:
+        elif languages_to_use:  # if class was called with languages_to_use param
             if isinstance(languages_to_use, list):
                 self.set_language_sets(languages_to_use)
+        else:  # if no parameters were passed, try to load languages from default language file
+            self.load_language_sets_from_config(self.config_file_langs_default)
 
     def load_language_sets_from_config(self, config_file=config_file_langs_default):
         """ Loads language sets from configuration file.
