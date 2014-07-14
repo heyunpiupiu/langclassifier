@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 
 class classifier:
     """ Classifier class for classifying input of strings, by matching
@@ -13,20 +14,28 @@ class classifier:
 
     config_file_langs_default = 'config_languages'  # language configuration file
 
-    def __init__(self, languages_to_use=None):
+    def __init__(self, languages_file=None, languages_to_use=None):
         """ Initialises class.
 
             Needs to initialise:
                 languages structure used for matching.
 
             Args:
+                languages_file: a file containing a language structure of
+                                    a list containing dictionaries defining language/words pairs.
                 languages_to_use: a list containing dictionaries defining language/words pairs.
+
+            If languages_file is passed, languages_to_use is ignored.
+
         """
         self.languages = []  # list holding the words we define as "key" for each language
 
+        if languages_file:
+            self.load_language_sets_from_config(languages_file)
         # if class was called with languages_to_use param
-        if isinstance(languages_to_use, list):
-            self.set_language_sets(languages_to_use)
+        elif languages_to_use:
+            if isinstance(languages_to_use, list):
+                self.set_language_sets(languages_to_use)
 
     def load_language_sets_from_config(self, config_file=config_file_langs_default):
         """ Loads language sets from configuration file.
@@ -79,4 +88,12 @@ class classifier:
             Returns:
                 list containing the words found in provided string as string elements.
         """
-        pass
+        resulting_list = []
+
+        if isinstance(string, str):
+            rx = re.compile('\W+')  # create a new regular expression
+            cleansed_string = rx.sub(' ', string).strip()  # strip everything apart from single whitespace
+            resulting_list = cleansed_string.split()  # split cleansed string
+            # additional cleansing can occur before or after the splitting
+
+        return resulting_list
